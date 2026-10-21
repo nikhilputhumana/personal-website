@@ -1,0 +1,187 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Nikhil Puthumana</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one big name, then short plain-spoken sections stacked on a wide left-aligned column. The memorable moment is the NIKHIL loader; everything after it stays quiet. */
+:root {
+  --bg: #E8F1EA;
+  --fg: #10231A;
+  --muted: #4E6458;
+  --line: #BCCDC1;
+  --mark: #FFE45C;
+  --mark-fg: #10231A;
+  --stamp: #BE3B27;
+  --loader-bg: #10231A;
+  --loader-fg: #E8F1EA;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Newsreader", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
+    --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F;
+    --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
+  --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F;
+  --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 1.25rem; line-height: 1.55;
+  padding-block: 1.5rem 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 5.5rem; }
+a { color: inherit; text-decoration-color: var(--muted); text-underline-offset: 4px; }
+a:hover { text-decoration-color: var(--fg); }
+:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+mark { background: var(--mark); color: var(--mark-fg); padding: 0 .2em; border-radius: 3px; }
+
+/* loader: letters scramble, then lock in one by one. The CSS lift clears it even if the script fails. */
+.loader {
+  position: fixed; inset: 0; z-index: 100; background: var(--loader-bg); color: var(--loader-fg);
+  display: flex; align-items: center; justify-content: center;
+  animation: lift .6s cubic-bezier(.7,0,.2,1) 1.9s forwards;
+}
+.loader .word {
+  display: flex; font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(3rem, 16vw, 9rem); line-height: 1; letter-spacing: -.02em;
+}
+.loader .word span { display: inline-block; min-width: .64em; text-align: center; }
+@keyframes lift { to { transform: translateY(-100%); visibility: hidden; } }
+
+.top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; }
+.top a { text-decoration: none; border-bottom: 2px solid var(--mark); }
+
+/* hero */
+.hero { display: flex; flex-direction: column; gap: 1.75rem; }
+.hero h1 { font-weight: 800; font-size: clamp(3.2rem, 13vw, 8.5rem); line-height: .92; letter-spacing: -.035em; }
+.hero .line { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.3rem); line-height: 1.2; max-width: 30rem; }
+.hero .sub { max-width: 32rem; color: var(--muted); }
+.cert { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: 1.05rem; }
+.cert svg { width: 1.2rem; height: 1.2rem; flex: none; stroke: var(--fg); }
+
+/* sections */
+.sec { display: grid; grid-template-columns: 9rem 1fr; gap: 2rem; border-top: 2px solid var(--fg); padding-top: 1.25rem; }
+.sec > h2 { font-size: 1.15rem; font-weight: 500; }
+.body { display: flex; flex-direction: column; gap: 2.25rem; min-width: 0; }
+.big { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.25; max-width: 36rem; text-wrap: balance; }
+.role h3 { font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1; letter-spacing: -.02em; }
+.role .when { color: var(--muted); font-size: 1.05rem; margin: .35rem 0 .75rem; }
+.role p { max-width: 34rem; }
+
+.mail { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.addr { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.15rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; text-decoration-color: var(--mark); text-decoration-thickness: 3px; min-width: 0; }
+.chips { display: flex; gap: .6rem; flex-wrap: wrap; }
+.chip { display: inline-flex; gap: .5rem; align-items: baseline; border: 1px solid var(--line); border-radius: 999px; padding: .3rem 1rem; font-family: var(--font-display); font-weight: 500; font-size: 1rem; text-decoration: none; }
+.chip span { color: var(--muted); font-weight: 400; }
+.chip:hover { border-color: var(--fg); }
+button {
+  font-family: var(--font-display); font-weight: 500; font-size: .95rem; color: var(--fg); background: transparent;
+  border: 2px solid var(--fg); border-radius: 999px; padding: .35rem 1rem; cursor: pointer;
+}
+button:hover { background: var(--fg); color: var(--bg); }
+footer { color: var(--muted); font-size: 1rem; }
+
+@media (max-width: 760px) {
+  .sec { grid-template-columns: 1fr; gap: 1.25rem; }
+  .wrap { gap: 4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader { animation-duration: .01s !important; animation-delay: .3s !important; }
+}
+</style>
+
+<div class="loader" aria-hidden="true"><div class="word" id="word">NIKHIL</div></div>
+
+<div class="wrap">
+  <header class="top">
+    <span>Nikhil P.</span>
+    <a href="#hi">Say hi</a>
+  </header>
+
+  <section class="hero" aria-labelledby="h">
+    <h1 id="h">Nikhil Puthumana</h1>
+    <p class="line">Risk analyst, from Kerala.</p>
+    <p class="cert"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>ISO 27001 Lead Auditor certified</p>
+  </section>
+
+  <section class="sec" aria-labelledby="a">
+    <h2 id="a">About me</h2>
+    <div class="body">
+      <p class="big">Based in Kottayam. Happy to talk about <mark>risk, AI</mark>, music, or whatever you're into.</p>
+      <p class="big">I speak English and Malayalam, and I like things that are clear and well checked.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="w">
+    <h2 id="w">Work</h2>
+    <div class="body">
+      <div class="role">
+        <h3>Certa.ai</h3>
+        <p class="when">Risk Analyst, now</p>
+        <p>I teach an AI to read vendor evidence like an auditor, and tell the engineers where it gets it wrong.</p>
+      </div>
+      <div class="role">
+        <h3>EY</h3>
+        <p class="when">Risk Analyst, 2.5 years</p>
+        <p>150+ vendor risk assessments, start to finish. Calls, documents, findings, final report.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="hi" aria-labelledby="c">
+    <h2 id="c">Say hi</h2>
+    <div class="body">
+      <p class="big">Hiring, collaborating, or just saying hello. Pick whatever's easiest.</p>
+      <div class="mail">
+        <a class="addr" href="mailto:nikhilputhumana1@gmail.com">nikhilputhumana1@gmail.com</a>
+        <button type="button" id="copy">Copy email</button>
+      </div>
+      <div class="chips">
+        <a class="chip" href="https://www.linkedin.com/in/nikhil-puthumana/">LinkedIn</a>
+        <a class="chip" href="https://www.instagram.com/nikhil_puthumana_">Instagram <span>@nikhil_puthumana_</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>Nikhil Puthumana, Kerala, India</footer>
+</div>
+
+<script>
+(function () {
+  var word = document.getElementById("word");
+  if (word && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var name = "NIKHIL", glyphs = "ABCDEFGHJKLMNPRSTUVWXYZ", spans = [], last = [], start = performance.now();
+    word.textContent = "";
+    name.split("").forEach(function () { var s = document.createElement("span"); s.textContent = "?"; word.appendChild(s); spans.push(s); last.push(0); });
+    (function tick(t) {
+      var e = t - start, done = 0;
+      spans.forEach(function (s, i) {
+        if (e >= 350 + i * 200) { s.textContent = name[i]; done++; }
+        else if (t - last[i] > 110) { s.textContent = glyphs[Math.floor(Math.random() * glyphs.length)]; last[i] = t; }
+      });
+      if (done < spans.length) requestAnimationFrame(tick);
+    })(start);
+  }
+  var btn = document.getElementById("copy"), email = "nikhilputhumana1@gmail.com";
+  btn.onclick = function () {
+    function done(t) { btn.textContent = t; setTimeout(function () { btn.textContent = "Copy email"; }, 1800); }
+    try {
+      navigator.clipboard.writeText(email).then(function () { done("Copied"); }, function () { done("Select the email above"); });
+    } catch (e) { done("Select the email above"); }
+  };
+})();
+</script>
+
+</body></html>
