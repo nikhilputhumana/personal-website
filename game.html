@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trust or Flag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
+<style>
+/* Layout: one big name, then short plain-spoken sections stacked on a wide left-aligned column. The memorable moment is the NIKHIL loader; everything after it stays quiet. */
+:root {
+  --bg: #E8F1EA;
+  --fg: #10231A;
+  --muted: #4E6458;
+  --line: #BCCDC1;
+  --mark: #FFE45C;
+  --mark-fg: #10231A;
+  --stamp: #BE3B27;
+  --ok: #1E7A4C;
+  --bad: #B3402B;
+  --loader-bg: #10231A;
+  --loader-fg: #E8F1EA;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Newsreader", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
+    --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F; --ok: #5FD18F; --bad: #F08C79;
+    --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
+  --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F; --ok: #5FD18F; --bad: #F08C79;
+  --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 1.25rem; line-height: 1.55;
+  padding-block: 1.5rem 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 5.5rem; }
+a { color: inherit; text-decoration-color: var(--muted); text-underline-offset: 4px; }
+a:hover { text-decoration-color: var(--fg); }
+:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; }
+p { margin: 0; }
+mark { background: var(--mark); color: var(--mark-fg); padding: 0 .2em; border-radius: 3px; }
+
+.top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; }
+.top a { text-decoration: none; border-bottom: 2px solid var(--mark); }
+
+/* hero */
+.hero { display: flex; flex-direction: column; gap: 1.75rem; }
+.hero h1 { font-weight: 800; font-size: clamp(3.2rem, 13vw, 8.5rem); line-height: .92; letter-spacing: -.035em; }
+.hero .line { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.3rem); line-height: 1.2; max-width: 30rem; }
+.hero .sub { max-width: 32rem; color: var(--muted); }
+.cert { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: 1.05rem; }
+.cert svg { width: 1.2rem; height: 1.2rem; flex: none; stroke: var(--fg); }
+
+/* sections */
+.sec { display: grid; grid-template-columns: 9rem 1fr; gap: 2rem; border-top: 2px solid var(--fg); padding-top: 1.25rem; }
+.sec > h2 { font-size: 1.15rem; font-weight: 500; }
+.body { display: flex; flex-direction: column; gap: 2.25rem; min-width: 0; }
+.big { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.25; max-width: 36rem; text-wrap: balance; }
+.role h3 { font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1; letter-spacing: -.02em; }
+.role .when { color: var(--muted); font-size: 1.05rem; margin: .35rem 0 .75rem; }
+.role p { max-width: 34rem; }
+
+.mail { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.addr { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.15rem, 3.4vw, 1.7rem); overflow-wrap: anywhere; text-decoration-color: var(--mark); text-decoration-thickness: 3px; min-width: 0; }
+.chips { display: flex; gap: .6rem; flex-wrap: wrap; }
+.chip { display: inline-flex; gap: .5rem; align-items: baseline; border: 1px solid var(--line); border-radius: 999px; padding: .3rem 1rem; font-family: var(--font-display); font-weight: 500; font-size: 1rem; text-decoration: none; }
+.chip span { color: var(--muted); font-weight: 400; }
+.chip:hover { border-color: var(--fg); }
+button {
+  font-family: var(--font-display); font-weight: 500; font-size: .95rem; color: var(--fg); background: transparent;
+  border: 2px solid var(--fg); border-radius: 999px; padding: .35rem 1rem; cursor: pointer;
+}
+button:hover { background: var(--fg); color: var(--bg); }
+
+/* game */
+.game { border: 2px solid var(--fg); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; max-width: 40rem; min-height: 21rem; }
+.game .prog { color: var(--muted); font-size: 1rem; }
+.game .claim { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 4vw, 2.1rem); line-height: 1.15; letter-spacing: -.015em; text-wrap: balance; }
+.game .ev { border-left: 3px solid var(--line); padding-left: .9rem; font-size: 1.05rem; }
+.game .ev b { display: block; font-family: var(--font-display); font-weight: 500; font-size: .9rem; color: var(--muted); }
+.game .choices { display: flex; gap: .7rem; flex-wrap: wrap; }
+.game .res { min-height: 3.2rem; font-size: 1.05rem; }
+.game .res strong { font-family: var(--font-display); }
+.game .res .good { color: var(--ok); } .game .res .no { color: var(--bad); }
+.game .score { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 8vw, 4.5rem); line-height: 1; }
+.game button[disabled] { opacity: .45; cursor: default; pointer-events: none; }
+footer { color: var(--muted); font-size: 1rem; }
+
+@media (max-width: 760px) {
+  .sec { grid-template-columns: 1fr; gap: 1.25rem; }
+  .wrap { gap: 4rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a href="index.html">&larr; Nikhil Puthumana</a>
+    <span>Game</span>
+  </header>
+
+  <section class="hero" aria-labelledby="h">
+    <h1 id="h" style="font-size: clamp(2.6rem, 9vw, 5.5rem)">Trust or flag?</h1>
+    <p class="line">Six vendor claims. Check the evidence and make the call.</p>
+  </section>
+
+  <div class="body">
+    <div class="game" id="game" aria-live="polite"></div>
+    <p style="color:var(--muted);font-size:1rem;margin-top:1rem">All vendors and documents here are made up.</p>
+  </div>
+
+  <footer><a href="index.html">Back to the main page</a></footer>
+</div>
+<script>
+(function () {
+  var rounds = [
+    { c: "We encrypt all customer data.", e: "The SOC 2 report says production databases are encrypted. It does not mention laptops or file shares.", a: "flag", w: "The claim says all, the evidence covers only databases." },
+    { c: "We test our backups every quarter.", e: "Restore test logs for each of the last four quarters, signed off by the IT head.", a: "trust", w: "Regular, dated and signed. The evidence matches the claim." },
+    { c: "All our staff complete security training.", e: "The training report shows 62% of employees finished this year's course.", a: "flag", w: "62% is far from all." },
+    { c: "We are ISO 27001 certified.", e: "A valid certificate from an accredited body. Its scope includes the service you are buying.", a: "trust", w: "Valid, accredited and in scope." },
+    { c: "We fix critical vulnerabilities within 30 days.", e: "The patch policy sets 90 days for critical issues.", a: "flag", w: "The policy allows three times longer than the claim." },
+    { c: "We have a tested incident response plan.", e: "Plan reviewed this year, plus a report from a tabletop exercise held two months ago.", a: "trust", w: "There is a plan and proof it was tested." }
+  ];
+  var box = document.getElementById("game"), i = 0, score = 0;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function btn(label, fn) { var b = el("button", "", label); b.type = "button"; b.onclick = fn; return b; }
+  function round() {
+    var r = rounds[i]; box.innerHTML = "";
+    box.appendChild(el("p", "prog", "Round " + (i + 1) + " of " + rounds.length));
+    box.appendChild(el("p", "claim", "“" + r.c + "”"));
+    var ev = el("div", "ev"); ev.appendChild(el("b", "", "Evidence")); ev.appendChild(document.createTextNode(r.e)); box.appendChild(ev);
+    var ch = el("div", "choices"), res = el("p", "res");
+    function pick(v) {
+      var ok = v === r.a; if (ok) score++;
+      Array.prototype.forEach.call(ch.children, function (b) { b.disabled = true; b.setAttribute("aria-disabled", "true"); });
+      res.innerHTML = ""; var s = el("strong", ok ? "good" : "no", ok ? "Right. " : "Not quite. ");
+      res.appendChild(s); res.appendChild(document.createTextNode(r.w + " It was a " + (r.a === "trust" ? "trust" : "flag") + "."));
+      var next = btn(i === rounds.length - 1 ? "See my score" : "Next claim", function () { i++; i < rounds.length ? round() : end(); });
+      ch.appendChild(next); next.focus();
+    }
+    ch.appendChild(btn("Trust", function () { pick("trust"); }));
+    ch.appendChild(btn("Flag", function () { pick("flag"); }));
+    box.appendChild(ch); box.appendChild(res);
+  }
+  function end() {
+    box.innerHTML = "";
+    var msg = score === rounds.length ? "Audit ready. Nothing got past you." : score >= 4 ? "Sharp eye. A couple slipped through." : "Read the fine print. Try again and see.";
+    box.appendChild(el("p", "prog", "Your score"));
+    box.appendChild(el("p", "score", score + " of " + rounds.length));
+    box.appendChild(el("p", "", msg));
+    var again = btn("Play again", function () { i = 0; score = 0; round(); }); var w = el("div", "choices"); w.appendChild(again); box.appendChild(w);
+  }
+  round();
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nikhil Puthumana</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
@@ -14,6 +17,8 @@
   --mark: #FFE45C;
   --mark-fg: #10231A;
   --stamp: #BE3B27;
+  --ok: #1E7A4C;
+  --bad: #B3402B;
   --loader-bg: #10231A;
   --loader-fg: #E8F1EA;
   --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
@@ -22,16 +27,18 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
-    --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F;
+    --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F; --ok: #5FD18F; --bad: #F08C79;
     --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #0E1A13; --fg: #E8F1EA; --muted: #98AE9F; --line: #263A2D;
-  --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F;
+  --mark: #E8CE45; --mark-fg: #0E1A13; --stamp: #F0866F; --ok: #5FD18F; --bad: #F08C79;
   --loader-bg: #E8F1EA; --loader-fg: #0E1A13; color-scheme: dark;
 }
 * { box-sizing: border-box; }
+body { margin: 0; }
+[hidden] { display: none !important; }
 body {
   background: var(--bg); color: var(--fg);
   font-family: var(--font-body); font-size: 1.25rem; line-height: 1.55;
@@ -91,6 +98,19 @@ button {
   border: 2px solid var(--fg); border-radius: 999px; padding: .35rem 1rem; cursor: pointer;
 }
 button:hover { background: var(--fg); color: var(--bg); }
+
+/* game */
+.game { border: 2px solid var(--fg); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 1.1rem; max-width: 40rem; min-height: 21rem; }
+.game .prog { color: var(--muted); font-size: 1rem; }
+.game .claim { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 4vw, 2.1rem); line-height: 1.15; letter-spacing: -.015em; text-wrap: balance; }
+.game .ev { border-left: 3px solid var(--line); padding-left: .9rem; font-size: 1.05rem; }
+.game .ev b { display: block; font-family: var(--font-display); font-weight: 500; font-size: .9rem; color: var(--muted); }
+.game .choices { display: flex; gap: .7rem; flex-wrap: wrap; }
+.game .res { min-height: 3.2rem; font-size: 1.05rem; }
+.game .res strong { font-family: var(--font-display); }
+.game .res .good { color: var(--ok); } .game .res .no { color: var(--bad); }
+.game .score { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 8vw, 4.5rem); line-height: 1; }
+.game button[disabled] { opacity: .45; cursor: default; pointer-events: none; }
 footer { color: var(--muted); font-size: 1rem; }
 
 @media (max-width: 760px) {
@@ -101,7 +121,8 @@ footer { color: var(--muted); font-size: 1rem; }
   .loader { animation-duration: .01s !important; animation-delay: .3s !important; }
 }
 </style>
-
+</head>
+<body>
 <div class="loader" aria-hidden="true"><div class="word" id="word">NIKHIL</div></div>
 
 <div class="wrap">
@@ -140,6 +161,15 @@ footer { color: var(--muted); font-size: 1rem; }
     </div>
   </section>
 
+  <section class="sec" id="play" aria-labelledby="g">
+    <h2 id="g">Play</h2>
+    <div class="body">
+      <p class="big">Trust or flag? Six vendor claims, each with a bit of evidence. Make the call.</p>
+      <div class="game" id="game" aria-live="polite"></div>
+      <p class="note" style="color:var(--muted);font-size:1rem">All vendors and documents here are made up.</p>
+    </div>
+  </section>
+
   <section class="sec" id="hi" aria-labelledby="c">
     <h2 id="c">Say hi</h2>
     <div class="body">
@@ -157,7 +187,6 @@ footer { color: var(--muted); font-size: 1rem; }
 
   <footer>Nikhil Puthumana, Kerala, India</footer>
 </div>
-
 <script>
 (function () {
   var word = document.getElementById("word");
@@ -183,5 +212,47 @@ footer { color: var(--muted); font-size: 1rem; }
   };
 })();
 </script>
-
-</body></html>
+<script>
+(function () {
+  var rounds = [
+    { c: "We encrypt all customer data.", e: "The SOC 2 report says production databases are encrypted. It does not mention laptops or file shares.", a: "flag", w: "The claim says all, the evidence covers only databases." },
+    { c: "We test our backups every quarter.", e: "Restore test logs for each of the last four quarters, signed off by the IT head.", a: "trust", w: "Regular, dated and signed. The evidence matches the claim." },
+    { c: "All our staff complete security training.", e: "The training report shows 62% of employees finished this year's course.", a: "flag", w: "62% is far from all." },
+    { c: "We are ISO 27001 certified.", e: "A valid certificate from an accredited body. Its scope includes the service you are buying.", a: "trust", w: "Valid, accredited and in scope." },
+    { c: "We fix critical vulnerabilities within 30 days.", e: "The patch policy sets 90 days for critical issues.", a: "flag", w: "The policy allows three times longer than the claim." },
+    { c: "We have a tested incident response plan.", e: "Plan reviewed this year, plus a report from a tabletop exercise held two months ago.", a: "trust", w: "There is a plan and proof it was tested." }
+  ];
+  var box = document.getElementById("game"), i = 0, score = 0;
+  function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+  function btn(label, fn) { var b = el("button", "", label); b.type = "button"; b.onclick = fn; return b; }
+  function round() {
+    var r = rounds[i]; box.innerHTML = "";
+    box.appendChild(el("p", "prog", "Round " + (i + 1) + " of " + rounds.length));
+    box.appendChild(el("p", "claim", "“" + r.c + "”"));
+    var ev = el("div", "ev"); ev.appendChild(el("b", "", "Evidence")); ev.appendChild(document.createTextNode(r.e)); box.appendChild(ev);
+    var ch = el("div", "choices"), res = el("p", "res");
+    function pick(v) {
+      var ok = v === r.a; if (ok) score++;
+      Array.prototype.forEach.call(ch.children, function (b) { b.disabled = true; b.setAttribute("aria-disabled", "true"); });
+      res.innerHTML = ""; var s = el("strong", ok ? "good" : "no", ok ? "Right. " : "Not quite. ");
+      res.appendChild(s); res.appendChild(document.createTextNode(r.w + " It was a " + (r.a === "trust" ? "trust" : "flag") + "."));
+      var next = btn(i === rounds.length - 1 ? "See my score" : "Next claim", function () { i++; i < rounds.length ? round() : end(); });
+      ch.appendChild(next); next.focus();
+    }
+    ch.appendChild(btn("Trust", function () { pick("trust"); }));
+    ch.appendChild(btn("Flag", function () { pick("flag"); }));
+    box.appendChild(ch); box.appendChild(res);
+  }
+  function end() {
+    box.innerHTML = "";
+    var msg = score === rounds.length ? "Audit ready. Nothing got past you." : score >= 4 ? "Sharp eye. A couple slipped through." : "Read the fine print. Try again and see.";
+    box.appendChild(el("p", "prog", "Your score"));
+    box.appendChild(el("p", "score", score + " of " + rounds.length));
+    box.appendChild(el("p", "", msg));
+    var again = btn("Play again", function () { i = 0; score = 0; round(); }); var w = el("div", "choices"); w.appendChild(again); box.appendChild(w);
+  }
+  round();
+})();
+</script>
+</body>
+</html>
